@@ -1,16 +1,18 @@
 #include "game.h"
+#include "settings.h"
 
-Game::Game() {}
+Game::Game() : m_settings(WindowSettings::loadFromFile()) { m_window = m_settings.makeWindow(); }
 
 void Game::run()
 {
-    m_window.create(sf::VideoMode(800, 600), "Garaxus", sf::Style::Default);
+    // m_window.create(sf::VideoMode(800, 600), "Garaxus", sf::Style::Default);
+
     sf::Clock clock;
-    while (m_window.isOpen())
+    while (m_window->isOpen())
     {
         float dt = clock.restart().asSeconds();
         handleEvents();
-        if (!m_window.isOpen()) break;
+        if (!m_window->isOpen()) break;
         update();
         render();
     }
@@ -19,10 +21,10 @@ void Game::run()
 void Game::handleEvents()
 {
     sf::Event event;
-    while (m_window.pollEvent(event))
+    while (m_window->pollEvent(event))
     {
-        if (event.type == sf::Event::Closed) m_window.close();
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) m_window.close();
+        if (event.type == sf::Event::Closed) m_window->close();
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) m_window->close();
     }
 }
 
@@ -33,9 +35,9 @@ void Game::update()
 
 void Game::render()
 {
-    m_window.clear();
+    m_window->clear();
     // render frame
 
     //
-    m_window.display();
+    m_window->display();
 }

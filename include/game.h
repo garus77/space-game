@@ -1,5 +1,7 @@
 #pragma once
+#include "settings.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 class Game
 {
@@ -13,5 +15,6 @@ class Game
     void render();
 
   private:
-    sf::RenderWindow m_window;
+    std::unique_ptr<sf::RenderWindow> m_window;
+    WindowSettings m_settings;
 };
