@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Galaxus VERSION 0.1 LANGUAGES CXX)
+project(Galaxus VERSION 0.1.0 LANGUAGES CXX)
 
 # — Require C++17 —
 set(CMAKE_CXX_STANDARD 17)
@@ -73,4 +73,44 @@ target_link_libraries(${PROJECT_NAME}
         sfml-window
         sfml-system
         sfml-audio
+)
+
+if(WIN32)
+    # assume you placed all required .dlls under your project at lib/
+    set(SFML_DLL_SOURCE_DIR ${CMAKE_SOURCE_DIR}/lib)
+
+    if(EXISTS "${SFML_DLL_SOURCE_DIR}")
+        add_custom_command(
+            TARGET ${PROJECT_NAME}
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+                "${SFML_DLL_SOURCE_DIR}"
+                "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+            COMMENT "Copying SFML DLLs from ${SFML_DLL_SOURCE_DIR} to output directory"
+        )
+    else()
+        message(WARNING "SFML DLL folder not found: ${SFML_DLL_SOURCE_DIR}")
+    endif()
+endif()
+
+if(MINGW)
+  target_link_options(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Release>:-mwindows>
+  )
+elseif(MSVC)
+  target_link_options(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Release>:/SUBSYSTEM:WINDOWS>
+  )
+endif()
+
+# — Packaging target: zip up the contents of bin/ directly —
+add_custom_target(package
+  COMMENT "Creating ${PROJECT_NAME}-${PROJECT_VERSION}.zip"
+  COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+          ${CMAKE_COMMAND} -E tar
+            cfv
+            ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-v${PROJECT_VERSION}.zip
+            --format=zip
+            .
+  DEPENDS ${PROJECT_NAME}
 )
