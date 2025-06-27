@@ -1,12 +1,14 @@
+// game.cpp
 #include "game.h"
-#include "settings.h"
 
-Game::Game() : m_settings(WindowSettings::loadFromFile()) { m_window = m_settings.makeWindow(); }
+Game::Game() : m_settings(WindowSettings::loadFromFile())
+{
+    m_window = m_settings.makeWindow();
+    m_states.pushState<MenuState>(m_states, m_window.get());
+}
 
 void Game::run()
 {
-    // m_window.create(sf::VideoMode(800, 600), "Galaxus", sf::Style::Default);
-
     sf::Clock clock;
     while (m_window->isOpen())
     {
@@ -30,19 +32,18 @@ void Game::handleEvents()
             m_settings.fullscreen = !m_settings.fullscreen;
             m_window = m_settings.makeWindow();
         }
+        m_states.handleEvent(event);
     }
 }
 
 void Game::update(float deltaTime)
 {
     // update game
+    m_states.update(deltaTime);
 }
 
 void Game::render()
 {
-    m_window->clear();
-    // render frame
-
-    //
-    m_window->display();
+    // render
+    m_states.draw(*m_window);
 }

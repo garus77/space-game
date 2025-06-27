@@ -1,3 +1,4 @@
+// settings.cpp
 #include "settings.h"
 #include "json.hpp"
 #include <SFML/Graphics.hpp>

@@ -1,3 +1,4 @@
+// json.hpp
 /*
     JSON for Modern C++ (nlohmann/json)
     Copyright (c) 2013–2025 Niels Lohmann <mail@lohmann.me>
