@@ -7,7 +7,7 @@ using json = nlohmann::json;
 
 WindowSettings WindowSettings::loadFromFile()
 {
-    std::ifstream in{"../settings.json"};
+    std::ifstream in{"settings.json"};
     if (!in) throw std::runtime_error("Could not open settings.json");
 
     json j;
@@ -18,7 +18,7 @@ WindowSettings WindowSettings::loadFromFile()
     windowSettings.height = j.value("windowHeight", 600u);
     windowSettings.fullscreen = j.value("fullscreen", false);
     windowSettings.vsync = j.value("vsync", false);
-    windowSettings.frameLimit = j.value("frameLimit", 0u);
+    windowSettings.frameLimit = j.value("frameLimit", 60u);
     return windowSettings;
 }
 

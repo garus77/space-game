@@ -3,5 +3,5 @@
     "windowHeight" : 600,
     "fullscreen" : false,
     "vsync" : false,
-    "frameLimit" : 0
+    "frameLimit" : 60
 }

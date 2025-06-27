@@ -11,6 +11,8 @@ int main()
     catch (std::exception &e)
     {
         std::cerr << "Error: " << e.what() << "\n";
+        std::cout << "Press enter to exit...";
+        std::cin.get();
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;

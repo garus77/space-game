@@ -11,7 +11,7 @@ class Game
 
   private:
     void handleEvents();
-    void update();
+    void update(float deltaTime);
     void render();
 
   private:
