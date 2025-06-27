@@ -31,7 +31,23 @@ class MenuState : public GameState
     void draw(sf::RenderWindow &w) override;
 
   private:
-    StateManager &states;
-    sf::RenderWindow *window;
-    // … menu GUI, buttons, etc.
+    StateManager &m_states;
+    sf::RenderWindow *m_window;
+    // … menu GUI, buttons, etc. menu elements
+};
+
+class PlayState : public GameState
+{
+  public:
+    PlayState(StateManager &manager, sf::RenderWindow *window);
+    void onEnter() override;
+    void onExit() override;
+    void handleEvent(const sf::Event &e) override;
+    void update(float dt) override;
+    void draw(sf::RenderWindow &w) override;
+
+  private:
+    StateManager &m_states;
+    sf::RenderWindow *m_window;
+    // … menu GUI, buttons, etc. game elements
 };

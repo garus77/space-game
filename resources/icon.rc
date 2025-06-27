@@ -1,0 +1,2 @@
+// resource script to embed the .ico into the EXE
+1 ICON "resources/textures/icon.ico"

@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(Galaxus VERSION 0.1 LANGUAGES CXX)
 
+# — Require C++17 —
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -12,6 +13,13 @@ configure_file(
     ${CMAKE_SOURCE_DIR}/settings.json
     ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/settings.json
     COPYONLY
+)
+
+# — Ensure icon.ico is available at configure-time for windres —
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/resources/textures)
+file(COPY
+    ${CMAKE_SOURCE_DIR}/resources/textures/icon.ico
+    DESTINATION ${CMAKE_BINARY_DIR}/resources/textures
 )
 
 # — Define the executable and its include path —
@@ -31,7 +39,26 @@ target_sources(${PROJECT_NAME}
         ${SOURCES}
 )
 
-# — Use CMake’s built-in FindSFML module (not the SFMLConfig export) —
+# — Embed the Windows icon via icon.rc (requires icon.ico in build/resources/textures) —
+if(WIN32)
+    target_sources(${PROJECT_NAME}
+        PRIVATE
+            ${CMAKE_SOURCE_DIR}/resources/icon.rc
+    )
+endif()
+
+# — Copy entire resources/ tree (textures/, audio/) into build/bin/resources after build —
+file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resources
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources
+    COMMENT "Copying resources (textures/, audio/) to output directory"
+)
+
+# — Find SFML via CMake’s built-in module —
 find_package(SFML 2.6 REQUIRED COMPONENTS
     graphics
     window
