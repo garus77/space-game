@@ -76,20 +76,22 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 if(WIN32)
-    # assume you placed all required .dlls under your project at lib/
     set(SFML_DLL_SOURCE_DIR ${CMAKE_SOURCE_DIR}/lib)
 
-    if(EXISTS "${SFML_DLL_SOURCE_DIR}")
-        add_custom_command(
-            TARGET ${PROJECT_NAME}
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory
-                "${SFML_DLL_SOURCE_DIR}"
-                "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-            COMMENT "Copying SFML DLLs from ${SFML_DLL_SOURCE_DIR} to output directory"
-        )
-    else()
-        message(WARNING "SFML DLL folder not found: ${SFML_DLL_SOURCE_DIR}")
+    # only in Release builds:
+    if(CMAKE_BUILD_TYPE STREQUAL "Release")
+        if(EXISTS "${SFML_DLL_SOURCE_DIR}")
+            add_custom_command(
+                TARGET ${PROJECT_NAME}
+                POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
+                    "${SFML_DLL_SOURCE_DIR}"
+                    "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+                COMMENT "Copying SFML DLLs from ${SFML_DLL_SOURCE_DIR} to output directory"
+            )
+        else()
+            message(WARNING "SFML DLL folder not found: ${SFML_DLL_SOURCE_DIR}")
+        endif()
     endif()
 endif()
 
