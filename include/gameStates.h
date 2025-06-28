@@ -5,6 +5,7 @@
 
 class StateManager;
 
+// Base state for all other states
 class GameState
 {
   public:
@@ -64,4 +65,5 @@ class PlayState : public GameState
 
   private:
     // … menu GUI, buttons, etc. game elements
+    sf::CircleShape m_playa;
 };
