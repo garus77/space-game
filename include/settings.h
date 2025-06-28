@@ -11,9 +11,9 @@ struct WindowSettings
     bool vsync = false;
     unsigned frameLimit = 60;
 
-    // loadFromFile is a *static* factory that you call exactly once
+    // Loads window settings from "settings.json". Called on game constructor
     static WindowSettings loadFromFile();
 
-    // makeWindow never re-reads JSON; it just uses these members
+    // makeWindow never re-reads JSON; it just uses the window setting's members
     std::unique_ptr<sf::RenderWindow> makeWindow() const;
 };

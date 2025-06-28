@@ -16,11 +16,14 @@ class GameState
     // called once when this state is removed / replaced
     virtual void onExit() = 0;
 
-    // event‐handling, update & draw
+    // event‐handling for this game state
     virtual void handleEvent(const sf::Event &event) = 0;
+    // updating for this game state
     virtual void update(float dt) = 0;
+    // rendering for this game state
     virtual void draw(sf::RenderWindow &window) = 0;
 
+    // sets render window for this game state (only used by state manager)
     void setRenderWindow(sf::RenderWindow *newWindow) { m_window = newWindow; }
 
   protected:

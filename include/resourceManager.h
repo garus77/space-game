@@ -31,8 +31,10 @@ class ResourceManager
         return inserted.first->second;
     }
 
-    // Cached resources, owned by this manager
+    // Cached fonts, owned by this manager
     std::unordered_map<std::string, sf::Font> fonts;
+    // Cached textures, owned by this manager
     std::unordered_map<std::string, sf::Texture> textures;
+    // Cached soundbuffers, owned by this manager
     std::unordered_map<std::string, sf::SoundBuffer> sounds;
 };

@@ -26,6 +26,7 @@ class StateManager
         states.back()->onEnter();
     }
 
+    // Pop top state
     void popState()
     {
         if (!states.empty())
@@ -36,21 +37,25 @@ class StateManager
         }
     }
 
+    // Handle events for top state
     void handleEvent(const sf::Event &e)
     {
         if (!states.empty()) states.back()->handleEvent(e);
     }
 
+    // Update for top state
     void update(float dt)
     {
         if (!states.empty()) states.back()->update(dt);
     }
 
+    // Render for top state
     void draw(sf::RenderWindow &w)
     {
         if (!states.empty()) states.back()->draw(w);
     }
 
+    // Sets the render window for all game states
     void setRenderWindow(sf::RenderWindow *window)
     {
         for (auto &s : states)
