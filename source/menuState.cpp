@@ -12,7 +12,7 @@ void MenuState::onEnter()
     m_titleText.setFont(font);
     m_titleText.setString("GALAXUS");
     m_titleText.setCharacterSize(48); // in pixels
-    m_titleText.setFillColor(sf::Color::White);
+    m_titleText.setFillColor(sf::Color::Blue);
     m_titleText.setOutlineColor(sf::Color::Black);
     m_titleText.setOutlineThickness(-1.0f);
     // center it at the top of the window:
@@ -31,24 +31,37 @@ void MenuState::onExit()
 {
     // m_window->setTitle("NOT MENUSTATE");
     // cleanup if needed
+    // m_resources.unloadTexture("coca cola history");
 }
 
-void MenuState::handleEvent(const sf::Event &e)
+void MenuState::handleEvent(const sf::Event &event)
 {
-    if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Enter)
+    if (event.type == sf::Event::KeyPressed)
     {
-        // switch to PlayState when Enter is pressed
-        m_states.changeState<PlayState>(m_states, m_window, m_resources);
+        sf::Keyboard::Key key = event.key.code;
+        if (key == sf::Keyboard::Enter)
+        {
+            // switch to PlayState when Enter is pressed
+            m_states.changeState<PlayState>(m_states, m_window, m_resources);
+        }
+        if (key == sf::Keyboard::A)
+        {
+            m_titleText.setFillColor(sf::Color::Red);
+        }
+        if (key == sf::Keyboard::S)
+        {
+            m_titleText.setFillColor(sf::Color::Green);
+        }
     }
 }
 
 void MenuState::update(float dt) { /* maybe animate */ }
 
-void MenuState::draw(sf::RenderWindow &w)
+void MenuState::draw(sf::RenderWindow &window)
 {
-    w.clear(sf::Color::Green);
+    window.clear(sf::Color::Green);
     // draw menu…
-    w.draw(m_backgroundSprite);
-    w.draw(m_titleText);
-    w.display();
+    window.draw(m_backgroundSprite);
+    window.draw(m_titleText);
+    window.display();
 }

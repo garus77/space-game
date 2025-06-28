@@ -38,9 +38,9 @@ class StateManager
     }
 
     // Handle events for top state
-    void handleEvent(const sf::Event &e)
+    void handleEvent(const sf::Event &event)
     {
-        if (!states.empty()) states.back()->handleEvent(e);
+        if (!states.empty()) states.back()->handleEvent(event);
     }
 
     // Update for top state
@@ -50,9 +50,9 @@ class StateManager
     }
 
     // Render for top state
-    void draw(sf::RenderWindow &w)
+    void draw(sf::RenderWindow &window)
     {
-        if (!states.empty()) states.back()->draw(w);
+        if (!states.empty()) states.back()->draw(window);
     }
 
     // Sets the render window for all game states

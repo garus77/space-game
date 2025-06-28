@@ -11,12 +11,15 @@ class ResourceManager
   public:
     // Fonts: resources/fonts/{id}.ttf
     const sf::Font &getFont(const std::string &id) { return getResource(id, fonts, "resources/fonts/", ".ttf"); }
+    bool unloadFont(const std::string &id) { return unloadResource(id, fonts); }
 
     // Textures: resources/textures/{id}.png
     const sf::Texture &getTexture(const std::string &id) { return getResource(id, textures, "resources/textures/", ".png"); }
+    bool unloadTexture(const std::string &id) { return unloadResource(id, textures); }
 
     // Audio: resources/audio/{id}.wav
     const sf::SoundBuffer &getSoundBuffer(const std::string &id) { return getResource(id, sounds, "resources/audio/", ".wav"); }
+    bool unloadSoundBuffer(const std::string &id) { return unloadResource(id, sounds); }
 
   private:
     // Generic loader: looks in `cache` first, otherwise loads basePath + id + ext
@@ -31,6 +34,9 @@ class ResourceManager
         auto inserted = cache.emplace(id, std::move(resource));
         return inserted.first->second;
     }
+
+    // Generic unloader: erase by id, return true if something was removed
+    template <typename R> bool unloadResource(const std::string &id, std::unordered_map<std::string, R> &cache) { return cache.erase(id) > 0; }
 
     // Cached fonts, owned by this manager
     std::unordered_map<std::string, sf::Font> fonts;

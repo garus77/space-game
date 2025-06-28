@@ -42,9 +42,9 @@ class MenuState : public GameState
     MenuState(StateManager &states, sf::RenderWindow *window, ResourceManager &resources) : GameState(states, window, resources) {}
     void onEnter() override;
     void onExit() override;
-    void handleEvent(const sf::Event &e) override;
+    void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
-    void draw(sf::RenderWindow &w) override;
+    void draw(sf::RenderWindow &window) override;
 
   private:
     // … menu GUI, buttons, etc. menu elements
@@ -58,9 +58,9 @@ class PlayState : public GameState
     PlayState(StateManager &states, sf::RenderWindow *window, ResourceManager &resources) : GameState(states, window, resources) {}
     void onEnter() override;
     void onExit() override;
-    void handleEvent(const sf::Event &e) override;
+    void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
-    void draw(sf::RenderWindow &w) override;
+    void draw(sf::RenderWindow &window) override;
 
   private:
     // … menu GUI, buttons, etc. game elements

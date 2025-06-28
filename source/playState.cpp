@@ -12,9 +12,9 @@ void PlayState::onExit()
     // cleanup if needed
 }
 
-void PlayState::handleEvent(const sf::Event &e)
+void PlayState::handleEvent(const sf::Event &event)
 {
-    if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Enter)
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
     {
         // switch to MenuState when Enter is pressed
         m_states.changeState<MenuState>(m_states, m_window, m_resources);
@@ -23,9 +23,9 @@ void PlayState::handleEvent(const sf::Event &e)
 
 void PlayState::update(float dt) { /* maybe animate */ }
 
-void PlayState::draw(sf::RenderWindow &w)
+void PlayState::draw(sf::RenderWindow &window)
 {
-    w.clear(sf::Color::Blue);
+    window.clear(sf::Color::Blue);
     // draw...
-    w.display();
+    window.display();
 }
