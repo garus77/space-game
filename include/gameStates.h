@@ -1,5 +1,6 @@
 // gameStates.h
 #pragma once
+#include "resourceManager.h"
 #include <SFML/Graphics.hpp>
 
 class StateManager;
@@ -9,7 +10,7 @@ class GameState
   public:
     virtual ~GameState() = default;
 
-    GameState(StateManager &manager, sf::RenderWindow *window) : m_states(manager), m_window(window) {}
+    GameState(StateManager &states, sf::RenderWindow *window, ResourceManager &resources) : m_states(states), m_window(window), m_resources(resources) {}
 
     // Called once when this state becomes active
     virtual void onEnter() = 0;
@@ -27,16 +28,18 @@ class GameState
     void setRenderWindow(sf::RenderWindow *newWindow) { m_window = newWindow; }
 
   protected:
-    // States reference inherited by all game states
+    // State manager reference inherited by all game states
     StateManager &m_states;
     // Window pointer inherited by all game states
     sf::RenderWindow *m_window;
+    // Resource manager reference inherited by all game states
+    ResourceManager &m_resources;
 };
 
 class MenuState : public GameState
 {
   public:
-    MenuState(StateManager &manager, sf::RenderWindow *window) : GameState(manager, window) {}
+    MenuState(StateManager &states, sf::RenderWindow *window, ResourceManager &resources) : GameState(states, window, resources) {}
     void onEnter() override;
     void onExit() override;
     void handleEvent(const sf::Event &e) override;
@@ -45,12 +48,14 @@ class MenuState : public GameState
 
   private:
     // … menu GUI, buttons, etc. menu elements
+    sf::Text m_titleText;
+    sf::Sprite m_backgroundSprite;
 };
 
 class PlayState : public GameState
 {
   public:
-    PlayState(StateManager &manager, sf::RenderWindow *window) : GameState(manager, window) {}
+    PlayState(StateManager &states, sf::RenderWindow *window, ResourceManager &resources) : GameState(states, window, resources) {}
     void onEnter() override;
     void onExit() override;
     void handleEvent(const sf::Event &e) override;

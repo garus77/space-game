@@ -20,7 +20,7 @@ void Game::run()
     recreateWindow();
 
     // 2) Now that the window exists, push your initial state
-    m_states.pushState<MenuState>(m_states, m_window.get());
+    m_states.pushState<MenuState>(m_states, m_window.get(), m_resources);
 
     sf::Clock clock;
     while (m_window->isOpen())
