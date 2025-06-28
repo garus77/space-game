@@ -25,18 +25,15 @@ WindowSettings WindowSettings::loadFromFile()
 
 std::unique_ptr<sf::RenderWindow> WindowSettings::makeWindow() const
 {
-    std::unique_ptr<sf::RenderWindow> window;
-    if (fullscreen)
-    {
-        window = std::make_unique<sf::RenderWindow>(sf::VideoMode::getDesktopMode(), "Galaxus", sf::Style::Fullscreen);
-    }
-    else
-    {
-        window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), "Galaxus", sf::Style::Close);
-    }
+    std::unique_ptr<sf::RenderWindow> window = std::make_unique<sf::RenderWindow>(fullscreen ? sf::VideoMode::getDesktopMode() : sf::VideoMode(width, height), "Galaxus", fullscreen ? sf::Style::Fullscreen : sf::Style::Close);
 
     window->setVerticalSyncEnabled(vsync);
     if (frameLimit > 0) window->setFramerateLimit(frameLimit);
+
+    sf::Image icon;
+    if (!icon.loadFromFile("resources/textures/icon.png")) throw std::runtime_error("Failed to load window icon");
+    auto size = icon.getSize();
+    window->setIcon(size.x, size.y, icon.getPixelsPtr());
 
     return window;
 }

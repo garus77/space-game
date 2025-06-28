@@ -1,13 +1,9 @@
 // game.cpp
 #include "game.h"
 
-Game::Game() : m_settings(WindowSettings::loadFromFile())
+Game::Game() : m_windowSettings(WindowSettings::loadFromFile()), m_window(m_windowSettings.makeWindow())
 {
-    m_window = m_settings.makeWindow();
-    sf::Image icon;
-    if (!icon.loadFromFile("resources/textures/icon.png")) throw std::runtime_error("Failed to load window icon");
-    auto size = icon.getSize();
-    m_window->setIcon(size.x, size.y, icon.getPixelsPtr());
+    // init
     m_states.pushState<MenuState>(m_states, m_window.get());
 }
 
@@ -32,8 +28,9 @@ void Game::handleEvents()
         if (event.type == sf::Event::Closed) m_window->close();
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F11)
         {
-            m_settings.fullscreen = !m_settings.fullscreen;
-            m_window = m_settings.makeWindow();
+            m_windowSettings.fullscreen = !m_windowSettings.fullscreen;
+            m_window.reset();
+            m_window = m_windowSettings.makeWindow();
         }
         m_states.handleEvent(event);
     }

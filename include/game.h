@@ -1,5 +1,6 @@
 // game.h
 #pragma once
+#include "resourceManager.h"
 #include "settings.h"
 #include "stateManager.h"
 #include <SFML/Graphics.hpp>
@@ -18,6 +19,7 @@ class Game
 
   private:
     std::unique_ptr<sf::RenderWindow> m_window;
-    WindowSettings m_settings;
+    WindowSettings m_windowSettings;
     StateManager m_states;
+    ResourceManager m_resources;
 };
