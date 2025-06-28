@@ -1,6 +1,7 @@
 // gameStates.h
 #pragma once
 #include "resourceManager.h"
+#include "uiManager.h"
 #include <SFML/Graphics.hpp>
 
 class StateManager;
@@ -24,6 +25,8 @@ class GameState
     virtual void update(float dt) = 0;
     // Rendering for this game state
     virtual void draw(sf::RenderWindow &window) = 0;
+    // Handling resize
+    // virtual void onResize(sf::Vector2u newSize) = 0;
 
     // Sets render window for this game state (only used by state manager)
     void setRenderWindow(sf::RenderWindow *newWindow) { m_window = newWindow; }
@@ -46,11 +49,13 @@ class MenuState : public GameState
     void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
     void draw(sf::RenderWindow &window) override;
+    // void onResize(sf::Vector2u newSize) override;
 
   private:
     // … menu GUI, buttons, etc. menu elements
     sf::Text m_titleText;
     sf::Sprite m_backgroundSprite;
+    UIManager m_ui;
 };
 
 class PauseState : public GameState
@@ -62,6 +67,7 @@ class PauseState : public GameState
     void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
     void draw(sf::RenderWindow &window) override;
+    // void onResize(sf::Vector2u newSize) override;
 
   private:
     // … menu GUI, buttons, etc. menu elements
@@ -78,6 +84,7 @@ class PlayState : public GameState
     void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
     void draw(sf::RenderWindow &window) override;
+    // void onResize(sf::Vector2u newSize) override;
 
   private:
     // … menu GUI, buttons, etc. game elements

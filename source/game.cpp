@@ -39,6 +39,12 @@ void Game::handleEvents()
     while (m_window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed) m_window->close();
+        /*
+        if (event.type == sf::Event::Resized)
+        {
+            m_states.handleResize({event.size.width, event.size.height});
+        }
+        */
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F11)
         {
             m_windowSettings.fullscreen = !m_windowSettings.fullscreen;

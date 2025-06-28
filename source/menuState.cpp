@@ -25,6 +25,9 @@ void MenuState::onEnter()
     auto winSize = m_window->getSize();
     auto texSize = bgTex.getSize();
     m_backgroundSprite.setScale(float(winSize.x) / texSize.x, float(winSize.y) / texSize.y);
+
+    auto &playBtn = m_ui.create<Button>(sf::Vector2f{200, 50}, font, "Play", [this] { m_states.changeState<PlayState>(m_states, m_window, m_resources); });
+    playBtn.setPosition(300, 200);
 }
 
 void MenuState::onExit()
@@ -36,6 +39,7 @@ void MenuState::onExit()
 
 void MenuState::handleEvent(const sf::Event &event)
 {
+    if (m_ui.handleEvent(event, *m_window)) return;
     if (event.type == sf::Event::KeyPressed)
     {
         sf::Keyboard::Key key = event.key.code;
@@ -62,4 +66,5 @@ void MenuState::draw(sf::RenderWindow &window)
     // draw menu…
     window.draw(m_backgroundSprite);
     window.draw(m_titleText);
+    m_ui.draw(window);
 }

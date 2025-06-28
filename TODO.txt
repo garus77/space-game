@@ -1,5 +1,6 @@
 - gameplay
 - ui elements (handler?)
+- resizeing of window
 - music
 - saving mechanics
 - controls remapping
