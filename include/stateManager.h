@@ -51,6 +51,12 @@ class StateManager
         if (!states.empty()) states.back()->draw(w);
     }
 
+    void setRenderWindow(sf::RenderWindow *window)
+    {
+        for (auto &s : states)
+            s->setRenderWindow(window);
+    }
+
   private:
     std::vector<std::unique_ptr<GameState>> states;
 };

@@ -9,6 +9,8 @@ class GameState
   public:
     virtual ~GameState() = default;
 
+    GameState(StateManager &manager, sf::RenderWindow *window) : m_states(manager), m_window(window) {}
+
     // called once when this state becomes active
     virtual void onEnter() = 0;
     // called once when this state is removed / replaced
@@ -18,12 +20,18 @@ class GameState
     virtual void handleEvent(const sf::Event &event) = 0;
     virtual void update(float dt) = 0;
     virtual void draw(sf::RenderWindow &window) = 0;
+
+    void setRenderWindow(sf::RenderWindow *newWindow) { m_window = newWindow; }
+
+  protected:
+    StateManager &m_states;
+    sf::RenderWindow *m_window;
 };
 
 class MenuState : public GameState
 {
   public:
-    MenuState(StateManager &manager, sf::RenderWindow *window);
+    MenuState(StateManager &manager, sf::RenderWindow *window) : GameState(manager, window) {}
     void onEnter() override;
     void onExit() override;
     void handleEvent(const sf::Event &e) override;
@@ -31,15 +39,13 @@ class MenuState : public GameState
     void draw(sf::RenderWindow &w) override;
 
   private:
-    StateManager &m_states;
-    sf::RenderWindow *m_window;
     // … menu GUI, buttons, etc. menu elements
 };
 
 class PlayState : public GameState
 {
   public:
-    PlayState(StateManager &manager, sf::RenderWindow *window);
+    PlayState(StateManager &manager, sf::RenderWindow *window) : GameState(manager, window) {}
     void onEnter() override;
     void onExit() override;
     void handleEvent(const sf::Event &e) override;
@@ -47,7 +53,5 @@ class PlayState : public GameState
     void draw(sf::RenderWindow &w) override;
 
   private:
-    StateManager &m_states;
-    sf::RenderWindow *m_window;
     // … menu GUI, buttons, etc. game elements
 };

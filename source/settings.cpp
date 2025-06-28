@@ -14,26 +14,29 @@ WindowSettings WindowSettings::loadFromFile()
     json j;
     in >> j;
 
-    WindowSettings windowSettings;
-    windowSettings.width = j.value("windowWidth", 800u);
-    windowSettings.height = j.value("windowHeight", 600u);
-    windowSettings.fullscreen = j.value("fullscreen", false);
-    windowSettings.vsync = j.value("vsync", false);
-    windowSettings.frameLimit = j.value("frameLimit", 60u);
-    return windowSettings;
+    WindowSettings s;
+    s.width = j.value("windowWidth", s.width);
+    s.height = j.value("windowHeight", s.height);
+    s.fullscreen = j.value("fullscreen", s.fullscreen);
+    s.vsync = j.value("vsync", s.vsync);
+    s.frameLimit = j.value("frameLimit", s.frameLimit);
+    return s;
 }
 
 std::unique_ptr<sf::RenderWindow> WindowSettings::makeWindow() const
 {
-    std::unique_ptr<sf::RenderWindow> window = std::make_unique<sf::RenderWindow>(fullscreen ? sf::VideoMode::getDesktopMode() : sf::VideoMode(width, height), "Galaxus", fullscreen ? sf::Style::Fullscreen : sf::Style::Close);
+    sf::VideoMode mode = fullscreen ? sf::VideoMode::getDesktopMode() : sf::VideoMode(width, height);
 
+    auto style = fullscreen ? sf::Style::Fullscreen : sf::Style::Close;
+
+    auto window = std::make_unique<sf::RenderWindow>(mode, "Galaxus", style);
     window->setVerticalSyncEnabled(vsync);
     if (frameLimit > 0) window->setFramerateLimit(frameLimit);
 
     sf::Image icon;
     if (!icon.loadFromFile("resources/textures/icon.png")) throw std::runtime_error("Failed to load window icon");
-    auto size = icon.getSize();
-    window->setIcon(size.x, size.y, icon.getPixelsPtr());
 
+    auto sz = icon.getSize();
+    window->setIcon(sz.x, sz.y, icon.getPixelsPtr());
     return window;
 }

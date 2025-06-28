@@ -16,10 +16,11 @@ class Game
     void handleEvents();
     void update(float deltaTime);
     void render();
+    void recreateWindow();
 
   private:
-    std::unique_ptr<sf::RenderWindow> m_window;
     WindowSettings m_windowSettings;
+    std::unique_ptr<sf::RenderWindow> m_window;
     StateManager m_states;
     ResourceManager m_resources;
 };

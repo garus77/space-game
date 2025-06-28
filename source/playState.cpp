@@ -2,8 +2,6 @@
 #include "gameStates.h"
 #include "stateManager.h"
 
-PlayState::PlayState(StateManager &m, sf::RenderWindow *w) : m_states(m), m_window(w) {}
-
 void PlayState::onEnter()
 {
     // m_window->setTitle("PLAYSTATE");

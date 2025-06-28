@@ -1,14 +1,27 @@
 // game.cpp
 #include "game.h"
 
-Game::Game() : m_windowSettings(WindowSettings::loadFromFile()), m_window(m_windowSettings.makeWindow())
+Game::Game() : m_windowSettings(WindowSettings::loadFromFile())
 {
     // init
-    m_states.pushState<MenuState>(m_states, m_window.get());
+}
+
+void Game::recreateWindow()
+{
+    // destroy old and build new
+    m_window = m_windowSettings.makeWindow();
+    // tell your states about the new window pointer, if they cache it:
+    m_states.setRenderWindow(m_window.get());
 }
 
 void Game::run()
 {
+    // 1) Create window before entering the loop
+    recreateWindow();
+
+    // 2) Now that the window exists, push your initial state
+    m_states.pushState<MenuState>(m_states, m_window.get());
+
     sf::Clock clock;
     while (m_window->isOpen())
     {
@@ -29,8 +42,7 @@ void Game::handleEvents()
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F11)
         {
             m_windowSettings.fullscreen = !m_windowSettings.fullscreen;
-            m_window.reset();
-            m_window = m_windowSettings.makeWindow();
+            recreateWindow();
         }
         m_states.handleEvent(event);
     }

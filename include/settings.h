@@ -5,15 +5,15 @@
 
 struct WindowSettings
 {
-    unsigned width;
-    unsigned height;
-    bool fullscreen;
-    bool vsync;
-    unsigned frameLimit;
+    unsigned width = 800;
+    unsigned height = 600;
+    bool fullscreen = false;
+    bool vsync = false;
+    unsigned frameLimit = 60;
 
-    // load from the settings.json file (throws on error)
+    // loadFromFile is a *static* factory that you call exactly once
     static WindowSettings loadFromFile();
 
-    // create and return a RenderWindow configured with these settings
+    // makeWindow never re-reads JSON; it just uses these members
     std::unique_ptr<sf::RenderWindow> makeWindow() const;
 };

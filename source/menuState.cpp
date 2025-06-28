@@ -2,8 +2,6 @@
 #include "gameStates.h"
 #include "stateManager.h"
 
-MenuState::MenuState(StateManager &m, sf::RenderWindow *w) : m_states(m), m_window(w) {}
-
 void MenuState::onEnter()
 {
     // m_window->setTitle("MENUSTATE");
