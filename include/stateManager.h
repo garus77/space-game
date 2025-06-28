@@ -8,7 +8,7 @@
 class StateManager
 {
   public:
-    // Replace current state
+    // Replace top state
     template <typename State, typename... Args> void changeState(Args &&...args)
     {
         if (!states.empty())
@@ -33,9 +33,12 @@ class StateManager
         {
             states.back()->onExit();
             states.pop_back();
-            if (!states.empty()) states.back()->onEnter();
+            // if (!states.empty()) states.back()->onEnter();
         }
     }
+
+    GameState *top() { return states.back().get(); }
+    bool empty() const { return states.empty(); }
 
     // Handle events for top state
     void handleEvent(const sf::Event &event)
@@ -49,10 +52,12 @@ class StateManager
         if (!states.empty()) states.back()->update(dt);
     }
 
-    // Render for top state
+    // Render for states in order from bottom to top
     void draw(sf::RenderWindow &window)
     {
-        if (!states.empty()) states.back()->draw(window);
+        if (!states.empty())
+            for (auto &s : states)
+                s->draw(window);
     }
 
     // Sets the render window for all game states

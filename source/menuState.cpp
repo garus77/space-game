@@ -39,7 +39,7 @@ void MenuState::handleEvent(const sf::Event &event)
     if (event.type == sf::Event::KeyPressed)
     {
         sf::Keyboard::Key key = event.key.code;
-        if (key == sf::Keyboard::Enter)
+        if (key == sf::Keyboard::Enter && m_states.top() == this)
         {
             // switch to PlayState when Enter is pressed
             m_states.changeState<PlayState>(m_states, m_window, m_resources);
@@ -59,9 +59,7 @@ void MenuState::update(float dt) { /* maybe animate */ }
 
 void MenuState::draw(sf::RenderWindow &window)
 {
-    window.clear(sf::Color::Green);
     // draw menu…
     window.draw(m_backgroundSprite);
     window.draw(m_titleText);
-    window.display();
 }

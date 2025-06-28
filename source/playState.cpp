@@ -21,10 +21,18 @@ void PlayState::onExit()
 
 void PlayState::handleEvent(const sf::Event &event)
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+    if (event.type == sf::Event::KeyPressed)
     {
-        // switch to MenuState when Enter is pressed
-        m_states.changeState<MenuState>(m_states, m_window, m_resources);
+        sf::Keyboard::Key key = event.key.code;
+        if (key == sf::Keyboard::Enter && m_states.top() == this)
+        {
+            // switch to MenuState when Enter is pressed
+            m_states.changeState<MenuState>(m_states, m_window, m_resources);
+        }
+        if (key == sf::Keyboard::Escape)
+        {
+            m_states.pushState<PauseState>(m_states, m_window, m_resources);
+        }
     }
 }
 
@@ -39,8 +47,6 @@ void PlayState::update(float dt)
 
 void PlayState::draw(sf::RenderWindow &window)
 {
-    window.clear(sf::Color::Blue);
     // draw...
     window.draw(m_playa);
-    window.display();
 }

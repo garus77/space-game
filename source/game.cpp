@@ -57,5 +57,7 @@ void Game::update(float deltaTime)
 void Game::render()
 {
     // render
+    m_window->clear(sf::Color::Black);
     m_states.draw(*m_window);
+    m_window->display();
 }

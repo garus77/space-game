@@ -53,6 +53,22 @@ class MenuState : public GameState
     sf::Sprite m_backgroundSprite;
 };
 
+class PauseState : public GameState
+{
+  public:
+    PauseState(StateManager &states, sf::RenderWindow *window, ResourceManager &resources) : GameState(states, window, resources) {}
+    void onEnter() override;
+    void onExit() override;
+    void handleEvent(const sf::Event &event) override;
+    void update(float dt) override;
+    void draw(sf::RenderWindow &window) override;
+
+  private:
+    // … menu GUI, buttons, etc. menu elements
+    sf::Text m_pauseText;
+    sf::Sprite m_backgroundSprite;
+};
+
 class PlayState : public GameState
 {
   public:
