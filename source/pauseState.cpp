@@ -3,7 +3,7 @@
 
 void PauseState::onEnter()
 {
-    // m_window->setTitle("PauseState");
+    m_window->setTitle("PAUSESTATE");
     // e.g. setup menu items
     // 1) Grab the font (throws if missing)
     const sf::Font &font = m_resources.getFont("arial");
@@ -35,7 +35,6 @@ void PauseState::handleEvent(const sf::Event &event)
         sf::Keyboard::Key key = event.key.code;
         if (key == sf::Keyboard::Escape)
         {
-            // switch to PlayState when Enter is pressed
             m_states.popState();
         }
         if (key == sf::Keyboard::B)

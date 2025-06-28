@@ -3,7 +3,7 @@
 
 void PlayState::onEnter()
 {
-    // m_window->setTitle("PLAYSTATE");
+    m_window->setTitle("PLAYSTATE");
     // e.g. setup items
     m_playa.setFillColor(sf::Color::Red);
     m_playa.setOutlineColor(sf::Color::Black);
@@ -24,7 +24,7 @@ void PlayState::handleEvent(const sf::Event &event)
     if (event.type == sf::Event::KeyPressed)
     {
         sf::Keyboard::Key key = event.key.code;
-        if (key == sf::Keyboard::Enter && m_states.top() == this)
+        if (key == sf::Keyboard::Enter)
         {
             // switch to MenuState when Enter is pressed
             m_states.changeState<MenuState>(m_states, m_window, m_resources);

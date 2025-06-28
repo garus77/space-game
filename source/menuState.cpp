@@ -3,7 +3,7 @@
 
 void MenuState::onEnter()
 {
-    // m_window->setTitle("MENUSTATE");
+    m_window->setTitle("MENUSTATE");
     // e.g. setup menu items
     // 1) Grab the font (throws if missing)
     const sf::Font &font = m_resources.getFont("arial");

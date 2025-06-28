@@ -26,6 +26,20 @@ class StateManager
         states.back()->onEnter();
     }
 
+    // Change bottom of the stack, exiting from the others in top->bottom order
+    template <typename State, typename... Args> void changeBaseState(Args &&...args)
+    {
+        // 1) Call onExit() on every state, from top -> bottom
+        for (auto it = states.rbegin(); it != states.rend(); ++it)
+            (*it)->onExit();
+
+        // 2) Clear out the vector entirely
+        states.clear();
+
+        // 3) Push the new base state (will call its onEnter())
+        pushState<State>(std::forward<Args>(args)...);
+    }
+
     // Pop top state
     void popState()
     {
@@ -33,11 +47,11 @@ class StateManager
         {
             states.back()->onExit();
             states.pop_back();
-            // if (!states.empty()) states.back()->onEnter();
+            if (!states.empty()) states.back()->onEnter();
         }
     }
 
-    GameState *top() { return states.back().get(); }
+    GameState *top() { return states.empty() ? nullptr : states.back().get(); }
     bool empty() const { return states.empty(); }
 
     // Handle events for top state
