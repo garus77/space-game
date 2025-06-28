@@ -63,5 +63,6 @@ class StateManager
     }
 
   private:
+    // Game states owned by this manager
     std::vector<std::unique_ptr<GameState>> states;
 };

@@ -11,23 +11,25 @@ class GameState
 
     GameState(StateManager &manager, sf::RenderWindow *window) : m_states(manager), m_window(window) {}
 
-    // called once when this state becomes active
+    // Called once when this state becomes active
     virtual void onEnter() = 0;
-    // called once when this state is removed / replaced
+    // Called once when this state is removed / replaced
     virtual void onExit() = 0;
 
-    // event‐handling for this game state
+    // Event‐handling for this game state
     virtual void handleEvent(const sf::Event &event) = 0;
-    // updating for this game state
+    // Updating for this game state
     virtual void update(float dt) = 0;
-    // rendering for this game state
+    // Rendering for this game state
     virtual void draw(sf::RenderWindow &window) = 0;
 
-    // sets render window for this game state (only used by state manager)
+    // Sets render window for this game state (only used by state manager)
     void setRenderWindow(sf::RenderWindow *newWindow) { m_window = newWindow; }
 
   protected:
+    // States reference inherited by all game states
     StateManager &m_states;
+    // Window pointer inherited by all game states
     sf::RenderWindow *m_window;
 };
 

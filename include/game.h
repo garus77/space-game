@@ -24,8 +24,12 @@ class Game
     void recreateWindow();
 
   private:
+    // Main window settings for game
     WindowSettings m_windowSettings;
+    // Window owned by game
     std::unique_ptr<sf::RenderWindow> m_window;
+    // State manager for game
     StateManager m_states;
+    // Resource manager for game
     ResourceManager m_resources;
 };
