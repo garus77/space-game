@@ -1,0 +1,5 @@
+- gameplay
+- ui elements (handler?)
+- music
+- saving mechanics
+- controls remapping
