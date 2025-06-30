@@ -3,7 +3,6 @@
 
 void PlayState::onEnter()
 {
-    m_window->setTitle("PLAYSTATE");
     // e.g. setup items
     m_playa.setFillColor(sf::Color::Red);
     m_playa.setOutlineColor(sf::Color::Black);

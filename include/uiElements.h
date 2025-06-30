@@ -191,6 +191,8 @@ class Label : public UIElement
         m_text.setFont(font);
         m_text.setString(text);
         m_text.setCharacterSize(charSize);
+        m_text.setOutlineThickness(-1.f);
+        m_text.setOutlineColor(sf::Color::Black);
     }
 
     bool handleEvent(const sf::Event &, const sf::RenderWindow &) override

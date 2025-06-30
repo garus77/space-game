@@ -2,6 +2,7 @@
 #include "game.h"
 #include <iostream>
 
+// This is where the whole application starts
 int main()
 {
     try
@@ -9,6 +10,7 @@ int main()
         Game game;
         game.run();
     }
+    // Catch any errors
     catch (std::exception &e)
     {
         std::cerr << "Error: " << e.what() << "\n";

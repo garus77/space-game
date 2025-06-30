@@ -6,21 +6,23 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
+// The class from wich everything runs
 class Game
 {
   public:
+    // Game constructor
     Game();
-    // runs game creating window etc. and starting game loop
+    // Runs game creating window etc. and starting game loop
     void run();
 
   private:
-    // handles global events outside of all game states
+    // Handles global events outside of all game states
     void handleEvents();
-    // updates globaly outside of all game states
+    // Updates globaly outside of all game states
     void update(float deltaTime);
-    // renders globaly outside of all game states
+    // Renders globaly outside of all game states
     void render();
-    // recreates the window and updates tells each state where the new window is
+    // Recreates the window and updates tells each state where the new window is
     void recreateWindow();
 
   private:

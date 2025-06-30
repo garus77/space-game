@@ -3,7 +3,6 @@
 
 void MenuState::onEnter()
 {
-    m_window->setTitle("MENUSTATE");
     // e.g. setup menu items
 
     const sf::Texture &bgTex = m_resources.getTexture("menu_background");
@@ -12,8 +11,8 @@ void MenuState::onEnter()
 
     const sf::Font &font = m_resources.getFont("arial");
 
-    auto &playBtn = m_ui.create<Button>(font, "Play", [this] { m_states.changeState<PlayState>(m_states, m_window, m_resources); });
-    playBtn.setRelativeBounds({.1f, .1f}, {.1f, .1f});
+    auto &playBtn = m_ui.create<Button>(font, "Play", [this] { m_states.changeBaseState<PlayState>(m_states, m_window, m_resources); });
+    playBtn.setRelativeBounds({.4f, .1f}, {.2f, .1f});
 
     auto &testLabel = m_ui.create<Label>(font, "TESTING LABEL", 36);
     testLabel.setRelativePosition({.5f, .5f});
