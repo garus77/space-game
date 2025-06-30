@@ -20,21 +20,31 @@ void MenuState::onEnter()
     auto bounds = m_titleText.getLocalBounds();
     m_titleText.setPosition((sz.x - bounds.width) / 2.f - bounds.left, 50.f);
 
-    const sf::Texture &bgTex = m_resources.getTexture("coca cola history");
+    const sf::Texture &bgTex = m_resources.getTexture("menu_background");
     m_backgroundSprite.setTexture(bgTex);
     auto winSize = m_window->getSize();
     auto texSize = bgTex.getSize();
     m_backgroundSprite.setScale(float(winSize.x) / texSize.x, float(winSize.y) / texSize.y);
 
-    auto &playBtn = m_ui.create<Button>(sf::Vector2f{200, 50}, font, "Play", [this] { m_states.changeState<PlayState>(m_states, m_window, m_resources); });
-    playBtn.setPosition(300, 200);
+    auto &playBtn = m_ui.create<Button>(font, "Play", [this] { m_states.changeState<PlayState>(m_states, m_window, m_resources); });
+    playBtn.setRelativeBounds({.1f, .1f}, {.1f, .1f});
+
+    onResize(m_window->getSize());
 }
 
 void MenuState::onExit()
 {
     // m_window->setTitle("NOT MENUSTATE");
     // cleanup if needed
-    // m_resources.unloadTexture("coca cola history");
+    // m_resources.unloadTexture("menu_background");
+}
+
+void MenuState::onResize(sf::Vector2u newSize)
+{
+    m_ui.resizeAll(newSize);
+    const sf::Texture &bgTex = m_resources.getTexture("menu_background");
+    auto texSize = bgTex.getSize();
+    m_backgroundSprite.setScale({float(newSize.x) / texSize.x, float(newSize.y) / texSize.y});
 }
 
 void MenuState::handleEvent(const sf::Event &event)

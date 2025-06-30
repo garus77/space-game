@@ -44,6 +44,12 @@ class UIManager
             window.draw(*widget);
     }
 
+    void resizeAll(sf::Vector2u newSize)
+    {
+        for (auto &widget : widgets)
+            widget->resize(newSize);
+    }
+
   private:
     std::vector<std::unique_ptr<UIElement>> widgets;
 };

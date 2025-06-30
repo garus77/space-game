@@ -12,6 +12,7 @@ void Game::recreateWindow()
     m_window = m_windowSettings.makeWindow();
     // tell your states about the new window pointer, if they cache it:
     m_states.setRenderWindow(m_window.get());
+    m_states.handleResize(m_window->getSize());
 }
 
 void Game::run()
@@ -39,12 +40,10 @@ void Game::handleEvents()
     while (m_window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed) m_window->close();
-        /*
         if (event.type == sf::Event::Resized)
         {
-            m_states.handleResize({event.size.width, event.size.height});
+            m_states.handleResize(sf::Vector2u(event.size.width, event.size.height));
         }
-        */
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F11)
         {
             m_windowSettings.fullscreen = !m_windowSettings.fullscreen;

@@ -81,13 +81,11 @@ class StateManager
             s->setRenderWindow(window);
     }
 
-    /*
     void handleResize(sf::Vector2u newSize)
     {
         for (auto &s : states)
             s->onResize(newSize);
     }
-            */
 
   private:
     // Game states owned by this manager

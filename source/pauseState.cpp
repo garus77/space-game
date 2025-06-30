@@ -25,7 +25,12 @@ void PauseState::onExit()
 {
     // m_window->setTitle("NOT PauseState");
     // cleanup if needed
-    // m_resources.unloadTexture("coca cola history");
+    // m_resources.unloadTexture("menu_background");
+}
+
+void PauseState::onResize(sf::Vector2u newSize)
+{
+    // m_ui.resizeAll(newSize);
 }
 
 void PauseState::handleEvent(const sf::Event &event)

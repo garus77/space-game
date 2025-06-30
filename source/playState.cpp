@@ -19,6 +19,11 @@ void PlayState::onExit()
     // cleanup if needed
 }
 
+void PlayState::onResize(sf::Vector2u newSize)
+{
+    // m_ui.resizeAll(newSize);
+}
+
 void PlayState::handleEvent(const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed)

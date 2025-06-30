@@ -26,7 +26,7 @@ class GameState
     // Rendering for this game state
     virtual void draw(sf::RenderWindow &window) = 0;
     // Handling resize
-    // virtual void onResize(sf::Vector2u newSize) = 0;
+    virtual void onResize(sf::Vector2u newSize) = 0;
 
     // Sets render window for this game state (only used by state manager)
     void setRenderWindow(sf::RenderWindow *newWindow) { m_window = newWindow; }
@@ -49,7 +49,7 @@ class MenuState : public GameState
     void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
     void draw(sf::RenderWindow &window) override;
-    // void onResize(sf::Vector2u newSize) override;
+    void onResize(sf::Vector2u newSize) override;
 
   private:
     // … menu GUI, buttons, etc. menu elements
@@ -67,7 +67,7 @@ class PauseState : public GameState
     void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
     void draw(sf::RenderWindow &window) override;
-    // void onResize(sf::Vector2u newSize) override;
+    void onResize(sf::Vector2u newSize) override;
 
   private:
     // … menu GUI, buttons, etc. menu elements
@@ -84,7 +84,7 @@ class PlayState : public GameState
     void handleEvent(const sf::Event &event) override;
     void update(float dt) override;
     void draw(sf::RenderWindow &window) override;
-    // void onResize(sf::Vector2u newSize) override;
+    void onResize(sf::Vector2u newSize) override;
 
   private:
     // … menu GUI, buttons, etc. game elements
