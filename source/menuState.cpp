@@ -5,29 +5,18 @@ void MenuState::onEnter()
 {
     m_window->setTitle("MENUSTATE");
     // e.g. setup menu items
-    // 1) Grab the font (throws if missing)
-    const sf::Font &font = m_resources.getFont("arial");
-
-    // 2) Configure sf::Text
-    m_titleText.setFont(font);
-    m_titleText.setString("GALAXUS");
-    m_titleText.setCharacterSize(48); // in pixels
-    m_titleText.setFillColor(sf::Color::Blue);
-    m_titleText.setOutlineColor(sf::Color::Black);
-    m_titleText.setOutlineThickness(-1.0f);
-    // center it at the top of the window:
-    sf::Vector2u sz = m_window->getSize();
-    auto bounds = m_titleText.getLocalBounds();
-    m_titleText.setPosition((sz.x - bounds.width) / 2.f - bounds.left, 50.f);
 
     const sf::Texture &bgTex = m_resources.getTexture("menu_background");
-    m_backgroundSprite.setTexture(bgTex);
-    auto winSize = m_window->getSize();
-    auto texSize = bgTex.getSize();
-    m_backgroundSprite.setScale(float(winSize.x) / texSize.x, float(winSize.y) / texSize.y);
+    auto &bgSprite = m_ui.create<SpriteElement>(bgTex);
+    bgSprite.setRelativeBounds({0.f, 0.f}, {1.f, 1.f});
+
+    const sf::Font &font = m_resources.getFont("arial");
 
     auto &playBtn = m_ui.create<Button>(font, "Play", [this] { m_states.changeState<PlayState>(m_states, m_window, m_resources); });
     playBtn.setRelativeBounds({.1f, .1f}, {.1f, .1f});
+
+    auto &testLabel = m_ui.create<Label>(font, "TESTING LABEL", 36);
+    testLabel.setRelativePosition({.5f, .5f});
 
     onResize(m_window->getSize());
 }
@@ -36,16 +25,10 @@ void MenuState::onExit()
 {
     // m_window->setTitle("NOT MENUSTATE");
     // cleanup if needed
-    // m_resources.unloadTexture("menu_background");
+    m_resources.unloadTexture("menu_background");
 }
 
-void MenuState::onResize(sf::Vector2u newSize)
-{
-    m_ui.resizeAll(newSize);
-    const sf::Texture &bgTex = m_resources.getTexture("menu_background");
-    auto texSize = bgTex.getSize();
-    m_backgroundSprite.setScale({float(newSize.x) / texSize.x, float(newSize.y) / texSize.y});
-}
+void MenuState::onResize(sf::Vector2u newSize) { m_ui.resizeAll(newSize); }
 
 void MenuState::handleEvent(const sf::Event &event)
 {
@@ -58,23 +41,21 @@ void MenuState::handleEvent(const sf::Event &event)
             // switch to PlayState when Enter is pressed
             m_states.changeState<PlayState>(m_states, m_window, m_resources);
         }
-        if (key == sf::Keyboard::A)
+        /*if (key == sf::Keyboard::A)
         {
             m_titleText.setFillColor(sf::Color::Red);
         }
         if (key == sf::Keyboard::S)
         {
             m_titleText.setFillColor(sf::Color::Green);
-        }
+        }*/
     }
 }
 
-void MenuState::update(float dt) { /* maybe animate */ }
+void MenuState::update(float dt) { m_ui.update(dt); }
 
 void MenuState::draw(sf::RenderWindow &window)
 {
     // draw menu…
-    window.draw(m_backgroundSprite);
-    window.draw(m_titleText);
     m_ui.draw(window);
 }

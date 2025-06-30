@@ -134,3 +134,93 @@ class Button : public UIElement
     sf::Text m_label;
     std::function<void()> m_callback;
 };
+
+class SpriteElement : public UIElement
+{
+  public:
+    // tex: the texture to display
+    // callback: optional on-click handler
+    SpriteElement(const sf::Texture &tex) { m_sprite.setTexture(tex); }
+
+    bool handleEvent(const sf::Event &ev, const sf::RenderWindow &window) override { return false; }
+
+    void update(float) override {}
+
+    // Set relative anchor & size (fractions of window dimensions)
+    void setRelativeBounds(sf::Vector2f anchor, sf::Vector2f size)
+    {
+        m_anchorPos = anchor;
+        m_anchorSize = size;
+    }
+
+    void resize(sf::Vector2u newSize) override
+    {
+        float px = m_anchorPos.x * newSize.x;
+        float py = m_anchorPos.y * newSize.y;
+        float w = m_anchorSize.x * newSize.x;
+        float h = m_anchorSize.y * newSize.y;
+        setPosition(px, py);
+        // scale sprite to fit the designated area
+        auto texSize = m_sprite.getTexture()->getSize();
+        m_sprite.setScale(w / texSize.x, h / texSize.y);
+    }
+
+  protected:
+    void draw(sf::RenderTarget &rt, sf::RenderStates states) const override
+    {
+        if (!m_visible) return;
+        states.transform *= getTransform();
+        rt.draw(m_sprite, states);
+    }
+
+    sf::FloatRect getLocalBounds() const override { return m_sprite.getLocalBounds(); }
+
+  private:
+    sf::Sprite m_sprite;
+};
+
+// Label: displays text at a relative position; font size stays constant
+class Label : public UIElement
+{
+  public:
+    // font: loaded sf::Font reference
+    // text: string to display
+    // charSize: pixel size of characters (remains fixed)
+    Label(const sf::Font &font, const std::string &text, unsigned charSize = 24)
+    {
+        m_text.setFont(font);
+        m_text.setString(text);
+        m_text.setCharacterSize(charSize);
+    }
+
+    bool handleEvent(const sf::Event &, const sf::RenderWindow &) override
+    {
+        // labels are not interactive by default
+        return false;
+    }
+
+    void update(float) override {}
+
+    // Set only relative position; size unchanged
+    void setRelativePosition(sf::Vector2f anchor) { m_anchorPos = anchor; }
+
+    void resize(sf::Vector2u newSize) override
+    {
+        float px = m_anchorPos.x * newSize.x;
+        float py = m_anchorPos.y * newSize.y;
+        setPosition(px, py);
+    }
+
+  protected:
+    void draw(sf::RenderTarget &rt, sf::RenderStates states) const override
+    {
+        if (!m_visible) return;
+        states.transform *= getTransform();
+        rt.draw(m_text, states);
+    }
+
+    sf::FloatRect getLocalBounds() const override { return m_text.getLocalBounds(); }
+
+  private:
+    sf::Text m_text;
+};

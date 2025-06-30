@@ -53,8 +53,6 @@ class MenuState : public GameState
 
   private:
     // … menu GUI, buttons, etc. menu elements
-    sf::Text m_titleText;
-    sf::Sprite m_backgroundSprite;
     UIManager m_ui;
 };
 
